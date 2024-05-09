@@ -1,0 +1,111 @@
+DFS and BFS
+
+nodes  = int(input("Enter no. of nodes : "))
+graph = {}
+for i in range(nodes) :
+    node1 = input("Enter node : ")
+
+    neighbour = int(input("Enter no. of neighbour : "))
+    if neighbour != 0 :
+        print("Enter neighbours of node ", node1, ": ")
+    ls = []
+    for j in range(neighbour) :
+        ls.append(input())
+        
+    graph.update({node1 : ls})
+
+visited = []
+queue = []
+
+val = list(graph.keys())
+node = val[0]
+
+queue.append(node)
+def bfs(graph) :
+    
+    if not queue:
+        return 
+    
+    n = queue.pop(0)
+    
+    if n not in visited:
+        visited.append(n)
+        print(n, end = " ")
+        
+        for m in graph[n]:
+            queue.append(m)
+        
+        bfs(graph)   
+        
+print("----- BFS -----")
+bfs(graph) 
+print()
+
+visited = set()
+def dfs(graph, node1) :
+    
+    if node1 not in visited:
+        visited.add(node1)
+        print(node1, end = " ")
+        
+        for neighbour in graph[node1]:
+            dfs(graph, neighbour)
+            
+print("---------- DFS ----------")
+dfs(graph,node)
+
+
+
+
+
+
+
+
+Prims
+
+# Method 1: Using list of lists
+INF = 9999999
+N = int(input("Enter no. of vertices in graph : "))
+
+#create a matrix of n size 
+G = [[0 for _ in range(N)] for _ in range(N)]
+
+node_array = [0 for _ in range(N)]
+
+for i in range(N) :
+    print("Enter",i, "node", end = ": ")
+    node_array[i] = int(input())
+    
+for i in range(N) :
+    val = node_array[i]
+    for j in range(N) :
+        print("Enter weight ", val," and ", node_array[j], end = ": ")
+        G[i][j] = int(input())
+        
+
+selected_node = [0, 0, 0, 0, 0]
+
+no_edge = 0
+
+selected_node[0] = True
+
+# printing for edge and weight
+print("Edge : Weight\n")
+while (no_edge < N - 1):
+    
+    minimum = INF
+    a = 0
+    b = 0       
+    for m in range(N):
+        if selected_node[m]:
+            for n in range(N):
+                if ((not selected_node[n]) and G[m][n]):  
+                    # not in selected and there is an edge
+                    if minimum > G[m][n]:
+                        minimum = G[m][n]
+                        a = m
+                        b = n
+    print(str(a) + "-" + str(b) + ":" + str(G[a][b]))
+    selected_node[b] = True
+    no_edge += 1
+    
